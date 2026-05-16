@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Virtual Environment
+venv/
+env/
+.venv/
+ENV/
+
+# Environment Variables (CRITICAL - never commit secrets)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+aws-credentials.txt
+
+# Data folders (too large + not needed in repo)
+data/raw/
+data/processed/
+data/vector_store/*.faiss
+data/vector_store/*.pkl
+!data/vector_store/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Logs
+*.log
+logs/
+
+# Build outputs
+dist/
+build/
+*.egg
