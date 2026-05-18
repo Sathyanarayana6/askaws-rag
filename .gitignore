@@ -22,12 +22,8 @@ ENV/
 *.key
 aws-credentials.txt
 
-# Data folders (too large + not needed in repo)
-data/raw/
-data/processed/
-data/vector_store/*.faiss
-data/vector_store/*.pkl
-!data/vector_store/.gitkeep
+# Data folders - regenerable, too large for repo, never commit
+data/
 
 # IDE
 .vscode/

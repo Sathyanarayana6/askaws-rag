@@ -85,3 +85,29 @@ def ask(question: str) -> dict:
     initial_state = {"question": question, "trace": []}
     final_state = graph.invoke(initial_state)
     return final_state
+
+def ask_streaming(question: str):
+    """Generator that yields each agent step as it completes.
+
+    Yields tuples of (agent_name, partial_state_update).
+    Final state is yielded under the key "final".
+
+    Use this for UIs that want to show live progress.
+    """
+    graph = get_graph()
+    initial_state = {"question": question, "trace": []}
+
+    accumulated = dict(initial_state)
+    for chunk in graph.stream(initial_state):
+        # chunk is a dict like {"router": {...partial state update...}}
+        for node_name, update in chunk.items():
+            # Merge the update into accumulated state (trace appends, others overwrite)
+            for key, value in update.items():
+                if key == "trace":
+                    accumulated.setdefault("trace", []).extend(value)
+                else:
+                    accumulated[key] = value
+            yield node_name, dict(accumulated)
+
+    # Final yield with everything assembled
+    yield "final", accumulated
