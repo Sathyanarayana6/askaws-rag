@@ -1,0 +1,223 @@
+# Golden test set for AskAWS RAGAS evaluation.
+# 30 curated questions across 5 services, with ground-truth answers.
+# Used for: faithfulness, answer relevancy, context precision metrics.
+
+s3:
+  - question: How do I create an S3 bucket?
+    ground_truth: |
+      You can create an S3 bucket using the AWS Management Console, AWS CLI,
+      AWS SDKs, or the S3 REST API. Each bucket must have a globally unique
+      name and is created in a specific AWS Region. Bucket names follow
+      naming rules: 3-63 characters, lowercase letters, numbers, hyphens.
+
+  - question: What are S3 bucket naming rules?
+    ground_truth: |
+      S3 bucket names must be 3-63 characters long, contain only lowercase
+      letters, numbers, hyphens, and periods. Names must begin and end with
+      a letter or number, must not be formatted as an IP address, and must
+      be globally unique across all AWS accounts.
+
+  - question: What is S3 versioning and how does it work?
+    ground_truth: |
+      S3 Versioning keeps multiple variants of an object in the same bucket.
+      When enabled, S3 stores all versions of an object including writes
+      and deletes. You can restore objects from accidental deletion or
+      overwrites. Versioning is enabled at the bucket level.
+
+  - question: How do I encrypt data at rest in S3?
+    ground_truth: |
+      S3 offers server-side encryption with several options: SSE-S3 (S3-managed keys),
+      SSE-KMS (AWS KMS-managed keys), and SSE-C (customer-provided keys).
+      You can also use client-side encryption. SSE-S3 is enabled by default
+      on all new objects since 2023.
+
+  - question: What are the different S3 storage classes?
+    ground_truth: |
+      S3 offers multiple storage classes: S3 Standard for frequent access,
+      S3 Intelligent-Tiering for automatic cost optimization, S3 Standard-IA
+      and S3 One Zone-IA for infrequent access, S3 Glacier Instant Retrieval,
+      S3 Glacier Flexible Retrieval, and S3 Glacier Deep Archive for archival.
+
+  - question: How do I generate a pre-signed URL for an S3 object?
+    ground_truth: |
+      A pre-signed URL grants temporary access to an S3 object. You generate
+      it using AWS SDKs by providing the bucket, key, expiration time, and
+      operation (GET, PUT). The URL includes signature parameters that
+      authenticate the request without exposing AWS credentials.
+
+lambda:
+  - question: What is AWS Lambda?
+    ground_truth: |
+      AWS Lambda is a serverless compute service that runs your code in
+      response to events without provisioning or managing servers. You upload
+      code as a function, configure triggers, and Lambda scales automatically.
+      You pay only for the compute time consumed.
+
+  - question: What runtimes does Lambda support?
+    ground_truth: |
+      Lambda supports multiple runtimes including Node.js, Python, Java,
+      Go, Ruby, .NET, and custom runtimes. Each runtime has a specific
+      version (e.g., Python 3.11, Node.js 20). You can also bring your own
+      runtime using the Lambda Runtime API.
+
+  - question: How do I trigger a Lambda function from an S3 event?
+    ground_truth: |
+      Configure S3 event notifications on a bucket to invoke a Lambda
+      function. Set the function's resource policy to grant S3 permission
+      to invoke it. Events can include object creation, deletion, or
+      restoration. The function receives an event payload describing
+      what happened.
+
+  - question: What is a Lambda execution role?
+    ground_truth: |
+      A Lambda execution role is an IAM role that grants the function
+      permission to access AWS services and resources. Lambda assumes this
+      role when invoking the function. The role's trust policy must allow
+      the Lambda service principal to assume it.
+
+  - question: What are Lambda layers used for?
+    ground_truth: |
+      Lambda layers package libraries, custom runtimes, or other dependencies
+      separately from your function code. You can share layers across
+      multiple functions, reducing deployment package size and enabling
+      code reuse. Up to 5 layers can be attached to a function.
+
+  - question: How does Lambda concurrency work?
+    ground_truth: |
+      Concurrency is the number of in-flight requests your function is
+      handling. Lambda scales automatically up to your account's concurrency
+      limit. You can configure reserved concurrency to guarantee capacity
+      or provisioned concurrency to keep functions warm and avoid cold starts.
+
+ec2:
+  - question: What is the difference between EC2 on-demand and spot instances?
+    ground_truth: |
+      On-Demand instances let you pay for compute by the second with no
+      long-term commitment. Spot instances offer significant discounts
+      (up to 90%) by using spare EC2 capacity, but can be interrupted
+      with two minutes notice when AWS needs the capacity back.
+
+  - question: What are EC2 reserved instances?
+    ground_truth: |
+      Reserved Instances provide a significant discount (up to 72%)
+      compared to On-Demand pricing in exchange for a 1- or 3-year
+      commitment. You can pay all upfront, partial upfront, or no upfront,
+      with greater discounts for more upfront payment.
+
+  - question: What is an Amazon Machine Image (AMI)?
+    ground_truth: |
+      An AMI is a template that contains the software configuration
+      (operating system, applications, settings) needed to launch an EC2
+      instance. AWS provides AWS-provided AMIs, AWS Marketplace AMIs,
+      and you can create your own custom AMIs from running instances.
+
+  - question: What are EC2 security groups?
+    ground_truth: |
+      Security groups act as virtual firewalls for EC2 instances, controlling
+      inbound and outbound traffic at the instance level. Rules specify
+      protocol, port range, and source/destination. Security groups are
+      stateful — return traffic is automatically allowed.
+
+  - question: What are the different EBS volume types?
+    ground_truth: |
+      EBS volume types include General Purpose SSD (gp3, gp2) for general
+      workloads, Provisioned IOPS SSD (io2, io1) for IO-intensive applications,
+      Throughput Optimized HDD (st1) for big data, and Cold HDD (sc1) for
+      infrequently accessed data.
+
+  - question: How do EC2 instance metadata work?
+    ground_truth: |
+      Instance metadata is data about the instance accessible from within
+      the instance itself via the IMDS at http://169.254.169.254/latest/meta-data/.
+      It includes instance ID, AMI ID, security groups, IAM role credentials,
+      and user-data. IMDSv2 uses session tokens for added security.
+
+iam:
+  - question: What is the difference between IAM users and IAM roles?
+    ground_truth: |
+      IAM users are identities for individual people or applications with
+      long-term credentials (access keys, passwords). IAM roles are
+      assumable identities with temporary credentials, used by AWS services,
+      federated users, or other accounts. Roles are preferred over users
+      for AWS service access.
+
+  - question: What is the structure of an IAM policy?
+    ground_truth: |
+      IAM policies are JSON documents with a Version and one or more
+      Statement blocks. Each Statement has Effect (Allow/Deny), Action
+      (the API calls), Resource (the ARNs), and optionally Principal,
+      Condition, and other elements.
+
+  - question: What are managed vs inline IAM policies?
+    ground_truth: |
+      Managed policies are standalone policies created and managed
+      separately, attachable to multiple identities — including AWS-managed
+      and customer-managed. Inline policies are embedded directly in a
+      single user, group, or role and cannot be reused.
+
+  - question: How do IAM permission boundaries work?
+    ground_truth: |
+      A permissions boundary is an advanced feature that sets the maximum
+      permissions an identity-based policy can grant to an IAM entity. The
+      entity can only perform actions allowed by both its identity policies
+      and its permission boundary.
+
+  - question: What is the IAM policy evaluation logic?
+    ground_truth: |
+      AWS evaluates policies by: (1) defaulting to implicit deny, (2) checking
+      all applicable policies for explicit Deny (immediate deny if found),
+      (3) checking for explicit Allow, (4) returning final allow only if
+      explicitly allowed and not explicitly denied. Service Control Policies,
+      permission boundaries, and session policies all factor in.
+
+  - question: What is MFA and why is it important in IAM?
+    ground_truth: |
+      Multi-Factor Authentication adds an extra security layer requiring
+      a second authentication factor (virtual MFA app, security key, or
+      hardware token) in addition to a password. IAM best practices
+      recommend enabling MFA for root account and all IAM users, especially
+      those with privileged access.
+
+sagemaker:
+  - question: What is Amazon SageMaker?
+    ground_truth: |
+      Amazon SageMaker is a fully managed machine learning service for
+      building, training, and deploying ML models. It provides integrated
+      tools for data preparation, training, hyperparameter tuning, model
+      deployment, and monitoring, all in one platform.
+
+  - question: What is the difference between SageMaker real-time and batch inference?
+    ground_truth: |
+      Real-time inference uses persistent endpoints that handle one-off
+      predictions with low latency, suitable for interactive applications.
+      Batch transform processes large datasets of predictions asynchronously
+      without a persistent endpoint, ideal for offline scoring of large
+      data sets.
+
+  - question: What is SageMaker Feature Store?
+    ground_truth: |
+      SageMaker Feature Store is a centralized repository for storing,
+      sharing, and managing machine learning features. It supports both
+      online (low-latency) and offline (training and batch) feature
+      retrieval and ensures feature consistency between training and inference.
+
+  - question: What is SageMaker Pipelines?
+    ground_truth: |
+      SageMaker Pipelines is a managed CI/CD service for ML workflows.
+      It lets you build, automate, and manage end-to-end ML pipelines
+      from data preparation through model deployment, with versioning,
+      lineage tracking, and integration with the SageMaker Model Registry.
+
+  - question: What is SageMaker JumpStart?
+    ground_truth: |
+      SageMaker JumpStart provides pre-trained models, solution templates,
+      and example notebooks to help you quickly get started with machine
+      learning. It includes foundation models, computer vision and NLP
+      models, and one-click deployment.
+
+  - question: What is SageMaker Studio?
+    ground_truth: |
+      SageMaker Studio is an integrated development environment for ML.
+      It provides a web-based interface with notebooks, debugging,
+      experiment tracking, model deployment, and pipeline management
+      in a single visual interface.
