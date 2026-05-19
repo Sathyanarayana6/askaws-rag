@@ -1,0 +1,15 @@
+# Development requirements
+# Install with: pip install -r requirements-dev.txt
+# (Includes everything from requirements.txt PLUS evaluation and dev tools)
+
+-r requirements.txt
+
+# Evaluation (only needed when running RAGAS scoring)
+ragas>=0.2.3
+datasets>=3.0.0
+nltk>=3.9.0
+
+# Development tools
+pytest>=8.0.0
+black>=24.0.0
+ipykernel>=6.29.0
