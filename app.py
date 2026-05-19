@@ -7,6 +7,8 @@ import time
 import streamlit as st
 from src.agents.graph import ask_streaming
 
+# Cost protection: limit queries per session
+MAX_QUERIES_PER_SESSION = 20
 
 st.set_page_config(
     page_title="AskAWS — Learn AWS with AI",
@@ -472,6 +474,10 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 if "pending_question" not in st.session_state:
     st.session_state.pending_question = None
+if "query_count" not in st.session_state:
+    st.session_state.query_count = 0  
+
+
 
 
 # ---------- SPLASH ----------
@@ -519,11 +525,12 @@ if not st.session_state.splash_dismissed:
 
 # ---------- MAIN ----------
 
+remaining = MAX_QUERIES_PER_SESSION - st.session_state.query_count
 st.markdown(
-    """
+    f"""
     <div class="main-header">
         <h1>Ask<em>AWS</em></h1>
-        <div class="tag">grounded · cited · multi-agent</div>
+        <div class="tag">{remaining}/{MAX_QUERIES_PER_SESSION} questions left · multi-agent</div>
     </div>
     """,
     unsafe_allow_html=True,
@@ -574,6 +581,21 @@ with chat_col:
 if st.session_state.pending_question:
     question = st.session_state.pending_question
     st.session_state.pending_question = None
+
+    # Cost protection: enforce per-session query limit
+    if st.session_state.query_count >= MAX_QUERIES_PER_SESSION:
+        st.session_state.messages.append({"role": "user", "content": question})
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": (
+                f"You've reached the {MAX_QUERIES_PER_SESSION}-question limit for this demo session. "
+                "This is a portfolio project with cost protection — refresh the page to start a new session, "
+                "or clone the repo and run it yourself: https://github.com/Sathyanarayana6/askaws-rag"
+            ),
+        })
+        st.rerun()
+
+    st.session_state.query_count += 1
     st.session_state.messages.append({"role": "user", "content": question})
 
     with chat_col:

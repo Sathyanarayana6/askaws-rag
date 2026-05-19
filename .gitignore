@@ -22,8 +22,14 @@ ENV/
 *.key
 aws-credentials.txt
 
-# Data folders - regenerable, too large for repo, never commit
-data/
+# Data folders
+# Most data is gitignored (too large + regenerable)
+data/raw/
+data/processed/
+data/evaluation_runs/
+
+# EXCEPT: FAISS index is committed for Streamlit Cloud deployment (~9MB)
+!data/vector_store/
 
 # IDE
 .vscode/

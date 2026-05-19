@@ -1,0 +1,7 @@
+{
+  "embedding_model": "amazon.titan-embed-text-v2:0",
+  "region": "us-east-1",
+  "num_vectors": 1893,
+  "embedding_dim": 1024,
+  "built_at": "2026-05-17 09:02:09"
+}
