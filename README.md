@@ -29,28 +29,29 @@ This project demonstrates production RAG engineering: streaming ingestion, vecto
 
 ## Architecture
 
-┌─────────────────┐
-   Question ──▶│  Router Agent   │── refuse ──▶ End
-               └────────┬────────┘
-                        │ retrieve
-                        ▼
-               ┌─────────────────┐
-               │ Retrieval Agent │  FAISS top-5 search
-               └────────┬────────┘
-                        │
-                        ▼
-               ┌─────────────────┐
-               │ Generator Agent │  Claude grounded answer
-               └────────┬────────┘
-                        │
-                        ▼
-               ┌─────────────────┐
-               │  Critic Agent   │  LLM-as-judge fact-check
-               └────────┬────────┘
-                        │
-                        ▼
-                   Final Answer
-
+```
+                   ┌─────────────────┐
+       Question ──▶│  Router Agent   │── refuse ──▶ End
+                   └────────┬────────┘
+                            │ retrieve
+                            ▼
+                   ┌─────────────────┐
+                   │ Retrieval Agent │  FAISS top-5 search
+                   └────────┬────────┘
+                            │
+                            ▼
+                   ┌─────────────────┐
+                   │ Generator Agent │  Claude grounded answer
+                   └────────┬────────┘
+                            │
+                            ▼
+                   ┌─────────────────┐
+                   │  Critic Agent   │  LLM-as-judge fact-check
+                   └────────┬────────┘
+                            │
+                            ▼
+                       Final Answer
+```
 **Four specialized agents** orchestrated as a LangGraph StateGraph with conditional routing:
 
 | Agent | Job | Why It Matters |
