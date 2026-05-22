@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import List, Dict
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.schema import Document
+from langchain_core.documents import Document
 from dotenv import load_dotenv
 
 load_dotenv()

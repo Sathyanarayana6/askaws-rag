@@ -22,7 +22,7 @@ from dotenv import load_dotenv
 from tqdm import tqdm
 from langchain_aws import BedrockEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain.schema import Document
+from langchain_core.documents import Document
 import boto3
 
 # Make chunker importable

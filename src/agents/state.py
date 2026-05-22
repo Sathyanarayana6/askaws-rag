@@ -10,7 +10,7 @@ and merge updates from each node.
 
 from typing import TypedDict, List, Optional, Literal, Annotated
 from operator import add
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 
 # Decision types the Router can produce

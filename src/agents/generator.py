@@ -10,7 +10,7 @@ import json
 from typing import Dict, List
 import boto3
 from dotenv import load_dotenv
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 from src.agents.state import AgentState
 
