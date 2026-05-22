@@ -2,7 +2,7 @@
 
 > A friendly assistant that helps you learn AWS. Four AI agents work together to answer your questions with grounded, cited responses from official AWS documentation.
 
-**Live demo:** _coming soon (Phase 7 deployment)_
+**Live demo:** [askaws.streamlit.app](https://askaws.streamlit.app)
 
 **Built by:** [Sathya Balla](https://www.linkedin.com/in/sathyanarayana-balla-3888721b7)
 ---
